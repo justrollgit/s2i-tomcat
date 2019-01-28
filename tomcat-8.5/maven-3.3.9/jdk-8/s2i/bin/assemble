@@ -27,6 +27,9 @@ mkdir -p $DEPLOY_DIR
 CONF_DIR=$CATALINA_HOME/conf
 mkdir -p $CONF_DIR
 
+BIN_DIR=$CATALINA_HOME/conf
+mkdir -p $BIN_DIR
+
 
 # Copy the source for compilation
 cp -Rf /opt/s2i/destination/src/. $LOCAL_SOURCE_DIR
@@ -111,6 +114,10 @@ else
   if [ -d $LOCAL_SOURCE_DIR/conf ]; then
     echo "Copying config files from project..."
     cp -v $LOCAL_SOURCE_DIR/conf/* $CONF_DIR/.
+  fi
+  if [ -d $LOCAL_SOURCE_DIR/bin ]; then
+    echo "Copying setenv files from project..."
+    cp -v $LOCAL_SOURCE_DIR/bin/* $CONF_DIR/.
   fi
 
   ERR=$?
