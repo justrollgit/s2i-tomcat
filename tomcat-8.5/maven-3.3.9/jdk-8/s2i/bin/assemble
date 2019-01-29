@@ -27,7 +27,7 @@ mkdir -p $DEPLOY_DIR
 CONF_DIR=$CATALINA_HOME/conf
 mkdir -p $CONF_DIR
 
-BIN_DIR=$CATALINA_HOME/conf
+BIN_DIR=$CATALINA_HOME/bin
 mkdir -p $BIN_DIR
 
 
@@ -44,7 +44,7 @@ if [ -f "$LOCAL_SOURCE_DIR/$POM_PATH/pom.xml" ]; then
     export INCREMENTAL=true
   fi
 
-  if [[ "$INCREMENTAL" = "true" ]]; then 
+  if [[ "$INCREMENTAL" = "true" ]]; then
     # restore any maven dependencies which will be present if this is an
     # incremental build
     echo -n "INCREMENTAL is set to $INCREMENTAL, we are restoring cached workspace containing .m2..."
@@ -110,6 +110,8 @@ if [ -f "$LOCAL_SOURCE_DIR/$POM_PATH/pom.xml" ]; then
   popd &> /dev/null
 else
   echo "Moving $WAR_NAME binaries in source directory into $DEPLOY_DIR for later deployment..."
+  #cleanup demo deploys
+  rm -rf $DEPLOY_DIR/*
   mv `find -name $WAR_NAME` $DEPLOY_DIR/ROOT.war
   if [ -d $LOCAL_SOURCE_DIR/conf ]; then
     echo "Copying config files from project..."
@@ -117,7 +119,7 @@ else
   fi
   if [ -d $LOCAL_SOURCE_DIR/bin ]; then
     echo "Copying setenv files from project..."
-    cp -v $LOCAL_SOURCE_DIR/bin/* $CONF_DIR/.
+    cp -v $LOCAL_SOURCE_DIR/bin/* $BIN_DIR/.
   fi
 
   ERR=$?
