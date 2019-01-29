@@ -7,7 +7,7 @@ MAINTAINER Sarcouy <sarcouy@protonmail.com>
 
 EXPOSE 8080
 
-ENV TOMCAT_VERSION=8.5.14 \
+ENV TOMCAT_VERSION=8.5.37 \
     TOMCAT_MAJOR=8 \
     MAVEN_VERSION=3.3.9 \
     TOMCAT_DISPLAY_VERSION=8.5 \
@@ -15,9 +15,14 @@ ENV TOMCAT_VERSION=8.5.14 \
     JAVA="java-1.8.0-openjdk java-1.8.0-openjdk-devel" \
     JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 \
     POM_PATH=.
+ENV http_proxy=http://30.57.71.24:6128
+ENV https_proxy=$http_proxy
+ENV HTTP_PROXY=$http_proxy
+ENV HTTPS_PROXY=$http_proxy
 
-LABEL io.k8s.description="Platform for building and running Java applications on Apache-Tomcat 8.5.14" \
-      io.k8s.display-name="Apache-Tomcat 8.5.14" \
+
+LABEL io.k8s.description="Platform for building and running Java applications on Apache-Tomcat 8.5.37" \
+      io.k8s.display-name="Apache-Tomcat 8.5.37" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,tomcat,tomcat8.5" \
       io.openshift.s2i.destination="/opt/s2i/destination"
