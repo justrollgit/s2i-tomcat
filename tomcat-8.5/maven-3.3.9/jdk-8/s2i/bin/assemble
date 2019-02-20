@@ -115,15 +115,13 @@ else
   #mv `find -name $WAR_NAME` $DEPLOY_DIR/ROOT.war
   cp -v $LOCAL_SOURCE_DIR/deployments/*.war $DEPLOY_DIR/ROOT.war
   #mv `find -name $WAR_NAME` $DEPLOY_DIR/ROOT.war
-  if [ -d $LOCAL_SOURCE_DIR/conf ]; then
-    echo "Copying config files from project..."
-    cp -v $LOCAL_SOURCE_DIR/conf/* $CONF_DIR/.
-  fi
-  if [ -d $LOCAL_SOURCE_DIR/bin ]; then
-    echo "Copying setenv files from project..."
-    cp -v $LOCAL_SOURCE_DIR/bin/* $BIN_DIR/.
-  fi
-
+ 
+  #make symlinks
+  for symlinks in /tomcat/conf/context.xml /tomcat/bin/setenv.sh; do
+     rm $symlinks
+     ln -s /conf/$(basename $symlinks) $symlinks
+  done
+ 
   ERR=$?
   if [ $ERR -ne 0 ]; then
     echo "Aborting due to error code $ERR from moving $WAR_NAME file, maybe it doesn't exist "
